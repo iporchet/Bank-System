@@ -1,37 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
+typedef unsigned char bool;
+static const bool TRUE = 1;
+static const bool FALSE = 0;
 
-char add_user()
+bool no_name(FILE *file_name, char name)
 {
-    /* Function to add users to the file */
-    char name; 
+    /*Iterates through file and checks if name already exists */
 
-    printf("What will be the name on the account: ");
-    scanf("%c", &name);
+    char buff[255];
 
-    char usr_info[50] = {};
-    usr_info[0] = name;
-
-    return usr_info;
+    while(fgets(buff, 255, file_name) != NULL)
+    {
+    }
 }
 
 void help_menu()
 {
-    printf("Add a account: 1\n");
-    printf("Add a user: 2\n");
+    /* help menu */
+    printf("Add a user: 1\n");
+    printf("Add a account: 2\n");
     printf("Delete a user: 3\n");
     printf("Deposit funds: 4\n");
     printf("Withdraw funds: 5\n");
-    printf("Exit: 6\n");
+    printf("Exit: 6\n\n");
 
 }
 
 int main(void)
 {
-    // creates pointer for Bank file
+    // creates pointer for Bank file and an array for user input
     FILE *ftpr;
+    char name[255];
 
-    ftpr = fopen("D:\\Programming\\C_C++\\C_code\\prog0\\C_projects\\Bank System\\Bank Data.txt", "r+");
+    ftpr = fopen("D:\\Programming\\C_C++\\C_code\\C_projects\\Bank System\\Bank Data.txt", "r+");
 
     // checks to see if file exists
     if (ftpr == NULL)
@@ -48,39 +50,54 @@ int main(void)
         while (usr_inpt != 6)
         {
             printf("What would you like to do?\n");
-
-            switch (usr_inpt)
-            {
+            scanf("%i", &usr_inpt);
             
             // Option to add a new user
-            case 1:
-                char name[] = {};
-                printf("Please enter the name of the Account: ");
-                scanf("%c", &name);
-                
-                int is_valid = 0;
-
-                for (int i = 0; i < strlen(ftpr); i++)
-                {
-                    if (name == ftpr[i])
-                    {
-                        is_valid = 1;
-                    }
-                }
-                
-                char usr_anccts[] = add_user();
-                break;
-
-
-            default:
-                printf("Sorry that is not an option");
-                help_menu();
-                break;
+            if (usr_inpt == 1)
+            {
+                    printf("What is your name:");
+                    scanf("%s", &name);
+                    fprintf(ftpr, "%s\n", name);
+                    printf("Done\n\n");
             }
 
+            else if(usr_inpt == 2)
+            {
+                //add an account
+            }
+
+            else if(usr_inpt == 3)
+            {
+                // remove user
+            }
+
+            else if(usr_inpt == 4)
+            {
+                // deposit funds
+            }
+
+            else if(usr_inpt == 5)
+            {
+                // withdraw funds
+            }
+
+            // exit option
+            else if(usr_inpt == 6)
+            {
+                break;
+            }
+            
+            // default response
+            else
+            {
+                    printf("Sorry that is not an option\n");
+                    help_menu();
+            }
+            
         }
     }
 
+    fclose(ftpr);
 
     return 0;
 }
